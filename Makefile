@@ -7,13 +7,10 @@ DIR	= edu/mscd/cs/jclo
 
 VERSION = $(shell cat VERSION)
 
-SOURCES	= $(shell ls $(DIR)/*.java $(DIR)/Version.java)
-CLASSES = $(SOURCES:.java=.class) $(DIR)/JCLOArgs.class $(DIR)/JCLOnly.class \
-	  $(DIR)/ExampleArgs.class
+SOURCES	= $(shell ls $(DIR)/*.java)
+CLASSES = $(SOURCES:.java=.class)
 
 PACKAGE	= edu.mscd.cs.jclo
-FILES	= $(SOURCES) $(CLASSES) Makefile index index.html \
-	  VERSION docs GOOD.1 GOOD.2 GOOD.3 GOOD.4 GOOD.5
 
 .SUFFIXES: .java .class .jar
 
@@ -48,5 +45,5 @@ test : JCLO.class JCLOTests.class Main.class Example.class
 	java -classpath $(ROOT) $(PACKAGE).JCLO --version
 
 tag:
-	cvs tag -R jclo`echo $(VERSION) | sed -e 's/\.//g'`
-
+	git tag -a v$(VERSION) -m "my version $(VERSION)"
+	# cvs tag -R jclo`echo $(VERSION) | sed -e 's/\.//g'`
