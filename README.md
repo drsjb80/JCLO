@@ -31,11 +31,11 @@ Here is a simple example using a class devoted to command line options.
         public static void main (String args[])
         {
             JCLO jclo = new JCLO (new ExampleArgs(), args);
-        System.out.println ("a = " + jclo.getInt ("a"));
-        System.out.println ("b = " + jclo.getBoolean ("b"));
-        System.out.println ("c = " + jclo.getFloat ("c"));
-        System.out.println ("d = " + jclo.getString ("d"));
-        System.out.println ("additional = " + 
+            System.out.println ("a = " + jclo.getInt ("a"));
+            System.out.println ("b = " + jclo.getBoolean ("b"));
+            System.out.println ("c = " + jclo.getFloat ("c"));
+            System.out.println ("d = " + jclo.getString ("d"));
+            System.out.println ("additional = " + 
             java.util.Arrays.toString (jclo.getStrings ("additional")));
         }
     }
