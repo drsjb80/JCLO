@@ -1,4 +1,4 @@
-package edu.mscd.cs.jclo;
+package edu.msudenver.cs.jclo;
 
 import java.io.File;
 import java.io.IOException;
