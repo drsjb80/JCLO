@@ -112,23 +112,15 @@ public class JCLOTests
      */
     public static void main (String args[]) throws IOException
     {
-	// cheesy, i know...
-	if (args.length == 1 && args[0].equalsIgnoreCase ("--version"))
-	{
-	    System.out.println (Version.getVersion());
-	}
-	else
-	{
 	    doubleDashTests();
 	    singleDashTests();
 	    mixedDashTests();
 	    JCLOnlyTests();
-	}
 	
-	String a[] = {"--help", "additional"};
-	JCLO j = new JCLO (new JCLOArgs());
-	j.parse (a);
-	// j.saveXML (new File ("JCLOArgs.xml"));
+        String a[] = {"--help", "additional"};
+        JCLO j = new JCLO (new JCLOArgs());
+        j.parse (a);
+        // j.saveXML (new File ("JCLOArgs.xml"));
     }
 }
 

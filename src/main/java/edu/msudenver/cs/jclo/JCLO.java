@@ -3,6 +3,8 @@ package edu.msudenver.cs.jclo;
 import java.lang.reflect.Field;
 import java.lang.reflect.Array;
 import java.lang.reflect.Modifier;
+import java.util.Properties;
+import java.io.FileInputStream;
 
 /**
  * This class is used to parse command-line arguments based on a the
@@ -42,11 +44,27 @@ public class JCLO
         this ((String) null, object, null);
     }
 
+    /**
+     *    A constructor that takes the Object that contains the variables
+     *    acceptable on a command line.  Call parse (String) to do the actual
+     *    parsing.
+     *
+     *    @param    object    where the variables/arguments are
+     *    @param    aliases   if there are CLO aliases
+     */
     public JCLO (Object object, String[][] aliases)
     {
         this ((String) null, object, aliases);
     }
 
+    /**
+     *    A constructor that takes the Object that contains the variables
+     *    acceptable on a command line.  Call parse (String) to do the actual
+     *    parsing.
+     *
+     *    @param    object  where the variables/arguments are
+     *    @param    prefix  if all CLO variables start with a prefix
+     */
     public JCLO (String prefix, Object object)
     {
         this (prefix, object, null);
@@ -59,6 +77,7 @@ public class JCLO
      *
      *    @param    object    where the variables/arguments are
      *    @param    prefix    the String CLO's start with, if any
+     *    @param    aliases   if there are CLO aliases
      */
     public JCLO (String prefix, Object object, String[][] aliases)
     {
@@ -117,7 +136,7 @@ public class JCLO
      *    Get the current value of the variable in the object
      *
      *    @param    key    the variable name
-     *    @return        an Object with the value
+     *    @return   an Object with the value
      */
     public Object getValue (String key)
     {
@@ -449,106 +468,142 @@ public class JCLO
 
     /**
      * Get a boolean value from the object after parsing.
+     * @param   key The name of the option.
+     * @return  The boolean.
      */
     public boolean getBoolean (String key)
     { return (((Boolean) getValue (key)).booleanValue()); }
 
     /**
      * Get a byte value from the object after parsing.
+     * @param   key The name of the option.
+     * @return  The byte.
      */
     public byte getByte (String key)
     { return (((Byte) getValue (key)).byteValue()); }
 
     /**
      * Get a character value from the object after parsing.
+     * @param   key The name of the option.
+     * @return  The character.
      */
     public char getChar (String key)
     { return (((Character) getValue (key)).charValue()); }
 
     /**
      * Get a short value from the object after parsing.
+     * @param   key The name of the option.
+     * @return  The short.
      */
     public short getShort (String key)
     { return (((Short) getValue (key)).shortValue()); }
 
     /**
      * Get an integer value from the object after parsing.
+     * @param   key The name of the option.
+     * @return  The integer.
      */
     public int getInt (String key)
     { return (((Integer) getValue (key)).intValue()); }
 
     /**
      * Get a float value from the object after parsing.
+     * @param   key The name of the option.
+     * @return  The float.
      */
     public float getFloat (String key)
     { return (((Float) getValue (key)).floatValue()); }
 
     /**
      * Get a double value from the object after parsing.
+     * @param   key The name of the option.
+     * @return  The double.
      */
     public double getDouble (String key)
     { return (((Double) getValue (key)).doubleValue()); }
 
     /**
      * Get a long value from the object after parsing.
+     * @param   key The name of the option.
+     * @return  The long.
      */
     public long getLong (String key)
     { return (((Long) getValue (key)).longValue()); }
 
     /**
      * Get a String from the object after parsing.
+     * @param   key The name of the option.
+     * @return  The String.
      */
     public String getString (String key)
     { return ((String) getValue (key)); }
 
     /**
      * Get an array of bytes from the object after parsing.
+     * @param   key The name of the option.
+     * @return  The array of bytes.
      */
     public byte[] getBytes (String key) { return ((byte[]) getValue (key)); }
 
     /**
      * Get an array of characaters from the object after parsing.
+     * @param   key The name of the option.
+     * @return  The array of characters.
      */
     public char[] getChars (String key) { return ((char[]) getValue (key)); }
 
     /**
      * Get an array of shorts from the object after parsing.
+     * @param   key The name of the option.
+     * @return  The array of shorts.
      */
     public short[] getShorts (String key) { return ((short[]) getValue (key)); }
 
     /**
      * Get an array of integers from the object after parsing.
+     * @param   key The name of the option.
+     * @return  The array of integers.
      */
     public int[] getInts (String key) { return ((int[]) getValue (key)); }
 
     /**
      * Get an array of floats from the object after parsing.
+     * @param   key The name of the option.
+     * @return  The array of floats.
      */
     public float[] getFloats (String key) { return ((float[]) getValue (key)); }
 
     /**
      * Get an array of doubles from the object after parsing.
+     * @param   key The name of the option.
+     * @return  The array of doubles.
      */
     public double[] getDoubles (String key)
     { return ((double[]) getValue (key)); }
 
     /**
      * Get an array of longs from the object after parsing.
+     * @param   key The name of the option.
+     * @return  The array of longs.
      */
     public long[] getLongs (String key) { return ((long[]) getValue (key)); }
 
     /**
      * Get an array of Strings from the object after parsing.
+     * @param   key The name of the option.
+     * @return  The array of Strings.
      */
     public String[] getStrings (String key)
     { return ((String[]) getValue (key)); }
 
-    public static void main (String args[])
+    public static void main (String args[]) throws java.io.IOException
     {
-        // cheesy, i know...
-        if (args.length == 1 && args[0].equalsIgnoreCase ("--version"))
-        {
-            System.out.println (Version.getVersion());
-        }
+        Properties properties = new Properties();
+        FileInputStream in = new FileInputStream("version.properties");
+        properties.load(in);
+        in.close();
+        String version = properties.getProperty("version");
+
+        System.out.println ("Version: " + version);
     }
 }
