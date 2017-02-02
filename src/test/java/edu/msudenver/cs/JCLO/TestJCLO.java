@@ -2,31 +2,50 @@ import edu.msudenver.cs.jclo.JCLO;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.Rule;
+import org.junit.rules.ExpectedException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 class JCLOArgs
 {
-    int font__size;
+    int font__size;     // __ -> -
     String font__name;
     String font__style;
     boolean debug;
     boolean d;
-    boolean _1;
-    String Accept[];
-    int ints[];
+    boolean _1;         // _ -> 
     boolean help;
-    String Djava_$util_$logging_$config_$file;
+    String Djava_$util_$logging_$config_$file;  // _$ -> .
 
     String additional[];
 }
 
+class JCLOnly
+{
+    private int font__size;
+    private String font__name;
+    private String font__style;
+    private boolean JCLOdebug;
+    private boolean JCLO_1;
+
+    private String JCLOadditional[];
+}
+
+class Equivalent
+{
+    int one, two;
+    String equivalent[][] = {{"o", "one"}, {"t", "two" }};
+}
+
 public class TestJCLO
 {
+    JCLOArgs jcloargs = new JCLOArgs();
+    JCLO jclo = new JCLO (jcloargs);
 
     @Test
-    public void double_dash()
+    public void single_booleans()
     {
         HashMap<String, Boolean> hm = new HashMap<String, Boolean>();
         hm.put ("", false);
@@ -38,10 +57,7 @@ public class TestJCLO
 	    hm.put ("--debug=false", false);
 	    hm.put ("--debug=no", false);
 	    hm.put ("--debug=NO", false);
-	    // hm.put ("--debug", "one", "two", "three");
-
-        JCLOArgs jcloargs = new JCLOArgs();
-        JCLO jclo = new JCLO (jcloargs);
+	    hm.put ("--1", true);
 
         Iterator iterator = hm.entrySet().iterator();
         while(iterator.hasNext())
@@ -55,4 +71,103 @@ public class TestJCLO
             Assert.assertEquals (jcloargs.debug, me.getValue());
         }
     }
+
+    @Test
+    public void test_strings()
+    {
+	    jclo.parse (new String[]{"--font-size=10", "--font-style=BOLD",
+            "--font-name=foo", "--debug"});
+        Assert.assertEquals (jcloargs.font__size, 10);
+        Assert.assertEquals (jcloargs.font__style, "BOLD");
+        Assert.assertEquals (jcloargs.font__name, "foo");
+        Assert.assertTrue (jcloargs.debug);
+    }
+
+    @Test
+    public void test_additionals()
+    {
+	    jclo.parse (new String[]{"--debug", "one", "two", "three"});
+        Assert.assertTrue (jcloargs.debug);
+        Assert.assertTrue (jcloargs.additional[0].equals("one"));
+        Assert.assertTrue (jcloargs.additional[1].equals("two"));
+        Assert.assertTrue (jcloargs.additional[2].equals("three"));
+
+	    jclo.parse (new String[]{"zero", "one", "two"});
+        Assert.assertTrue (jcloargs.additional[0].equals("zero"));
+        Assert.assertTrue (jcloargs.additional[1].equals("one"));
+        Assert.assertTrue (jcloargs.additional[2].equals("two"));
+    }
+
+    @Test
+    public void test_dotted()
+    {
+	    jclo.parse (new String[]
+            {"-Djava.util.logging.config.file=MethodFilter.props"});
+        Assert.assertEquals(jcloargs.Djava_$util_$logging_$config_$file,
+            "MethodFilter.props");
+    }
+
+    @Test
+    public void multiple_args()
+    {
+	    jclo.parse (new String[]{"-debug", "true"});
+        Assert.assertTrue(jcloargs.debug);
+	    jclo.parse (new String[]{"-font-size", "10"});
+        Assert.assertEquals (jcloargs.font__size, 10);
+    }
+
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
+
+    @Test
+    public void exeception()
+    {
+        exception.expect(IllegalArgumentException.class);
+	    jclo.parse (new String[]{"--none=none"});
+    }
+
+    @Test
+    public void test_prefix()
+    {
+        JCLOnly jclonly = new JCLOnly();
+        JCLO jclo = new JCLO ("JCLO", jclonly);
+
+	    jclo.parse (new String[]{"-debug", "true"});
+        Assert.assertTrue(jclo.getBoolean("debug"));
+
+	    jclo.parse (new String[]{"zero", "one", "two"});
+        String additionals[] = jclo.getStrings ("additional");
+        Assert.assertTrue(additionals[0].equals("zero"));
+        Assert.assertTrue(additionals[1].equals("one"));
+        Assert.assertTrue(additionals[2].equals("two"));
+
+	    jclo.parse (new String[]{"-1"});
+        Assert.assertTrue(jclo.getBoolean("_1"));
+    }
+
+    @Test
+    public void test_help()
+    {
+        Assert.assertEquals (jclo.usage(), 
+            "-1\n" +
+            "-Djava.util.logging.config.file String\n"+
+            "-d\n"+
+            "-debug\n"+
+            "-font-name String\n"+
+            "-font-size int\n"+
+            "-font-style String\n"+
+            "-help\n");
+    }
+
+    /*
+    @Test
+    public void test_equivalent()
+    {
+        Equivalent equiv = new Equivalent();
+        JCLO jclo = new JCLO (equiv);
+
+	    jclo.parse (new String[]{"-o", "10"});
+        Assert.assertEquals(equiv.one, 10);
+    }
+    */
 }
