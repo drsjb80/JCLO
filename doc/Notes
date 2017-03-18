@@ -6,3 +6,7 @@ https://oss.sonatype.org/#stagingRepositories
     Deploy
 
 https://oss.sonatype.org/content/groups/public/edu/msudenver/cs/JCLO/
+
+mvn clean deploy
+mvn nexus-staging:release
+mvn nexus-staging:drop

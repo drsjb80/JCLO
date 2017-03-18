@@ -27,7 +27,6 @@ Here is a simple example using a class devoted to command line options.
 
     public class Example
     {
-
         public static void main (String args[])
         {
             JCLO jclo = new JCLO (new ExampleArgs(), args);
