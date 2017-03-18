@@ -1,0 +1,9 @@
+<settings>
+  <servers>
+    <server>
+      <id>ossrh</id>
+      <username>drb80</username>
+      <password></password>
+    </server>
+  </servers>
+</settings>
