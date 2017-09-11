@@ -14,7 +14,7 @@ https://github.com/drsjb80/JCLO
 ## Examples
 Here is a simple example using a class devoted to command line options.
 
-    import edu.mscd.cs.jclo.JCLO;
+    import edu.msudenver.cs.jclo.JCLO;
 
     class ExampleArgs
     {
@@ -29,7 +29,8 @@ Here is a simple example using a class devoted to command line options.
     {
         public static void main (String args[])
         {
-            JCLO jclo = new JCLO (new ExampleArgs(), args);
+            JCLO jclo = new JCLO (new ExampleArgs());
+            jclo.parse (args);
             System.out.println ("a = " + jclo.getInt ("a"));
             System.out.println ("b = " + jclo.getBoolean ("b"));
             System.out.println ("c = " + jclo.getFloat ("c"));
@@ -60,7 +61,7 @@ nonexistant option, and one with a number format error.
 Here is one that only uses variables prefixed with "JCLO" and that accepts
 single dash options.
 
-    import edu.mscd.cs.jclo.JCLO;
+    import edu.msudenver.cs.jclo.JCLO;
 
     public class Main
     {
@@ -79,7 +80,8 @@ single dash options.
         {
             Main main = new Main();
             System.out.println ("before: " + main);
-            JCLO jclo = new JCLO (main, "JCLO", false, args);
+            JCLO jclo = new JCLO (main, "JCLO");
+            jclo.parse (args);
             System.out.println (jclo.usage());
             System.out.println ("after: " + main);
         }
