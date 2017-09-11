@@ -96,3 +96,10 @@ An example run.
         -a int
     after: JCLOa = 5 JCLOb = true c = 0 d = false
 
+One can also create aliased arguments via the constructor. It can take an
+array of arrays, where each subarray is alias, arg.  For example:
+
+    String aliases[][] = {{"alias", "a"}};
+
+states that one can use --alias for --a.
+
