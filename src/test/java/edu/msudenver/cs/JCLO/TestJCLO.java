@@ -24,19 +24,25 @@ class JCLOArgs
 
 class JCLOnly
 {
-    private int font__size;
-    private String font__name;
-    private String font__style;
-    private boolean JCLOdebug;
-    private boolean JCLO_1;
+    int font__size;
+    String font__name;
+    String font__style;
+    boolean JCLOdebug;
+    boolean JCLO_1;
 
-    private String JCLOadditional[];
+    String JCLOadditional[];
 }
 
 class Equivalent
 {
     int one, two;
     String equivalent[][] = {{"o", "one"}, {"t", "two" }};
+}
+
+enum Levels {SEVERE, ERROR, WARNING, INFO, DEBUG, TRACE}
+
+class TestLevels {
+    Levels level;
 }
 
 public class TestJCLO
@@ -47,7 +53,7 @@ public class TestJCLO
     @Test
     public void single_booleans()
     {
-        HashMap<String, Boolean> hm = new HashMap<String, Boolean>();
+        Map<String, Boolean> hm = new HashMap<String, Boolean>();
         hm.put ("", false);
         hm.put ("--debug", true);
         hm.put ("--debug=FALSE", false);
@@ -59,16 +65,14 @@ public class TestJCLO
 	    hm.put ("--debug=NO", false);
 	    hm.put ("--1", true);
 
-        Iterator iterator = hm.entrySet().iterator();
-        while(iterator.hasNext())
-        {
-            Map.Entry me = (Map.Entry) iterator.next();
+        for (Object o : hm.entrySet()) {
+            Map.Entry me = (Map.Entry) o;
             String foo[] = new String[1];
             foo[0] = (String) me.getKey();
 
-            jclo.parse (foo);
+            jclo.parse(foo);
 
-            Assert.assertEquals (jcloargs.debug, me.getValue());
+            Assert.assertEquals(jcloargs.debug, me.getValue());
         }
     }
 
@@ -133,16 +137,16 @@ public class TestJCLO
         JCLO jclo = new JCLO ("JCLO", jclonly);
 
 	    jclo.parse (new String[]{"-debug", "true"});
-        Assert.assertTrue(jclo.getBoolean("debug"));
+        Assert.assertTrue(jclonly.JCLOdebug);
 
 	    jclo.parse (new String[]{"zero", "one", "two"});
-        String additionals[] = jclo.getStrings ("additional");
+        String additionals[] = jclonly.JCLOadditional;
         Assert.assertTrue(additionals[0].equals("zero"));
         Assert.assertTrue(additionals[1].equals("one"));
         Assert.assertTrue(additionals[2].equals("two"));
 
 	    jclo.parse (new String[]{"-1"});
-        Assert.assertTrue(jclo.getBoolean("_1"));
+        Assert.assertTrue(jclonly.JCLO_1);
     }
 
     @Test
@@ -157,6 +161,17 @@ public class TestJCLO
             "-font-size int\n"+
             "-font-style String\n"+
             "-help\n");
+    }
+
+    @Test
+    public void test_enum()
+    {
+        TestLevels l = new TestLevels();
+        l.level = Levels.SEVERE;
+        JCLO jclo = new JCLO(l);
+        jclo.parse(new String[]{"-level", "SEVERE"});
+        System.out.println (l.level);
+        System.out.println (jclo.usage());
     }
 
     /*
