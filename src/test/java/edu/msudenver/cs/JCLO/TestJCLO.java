@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 class JCLOArgs
@@ -53,7 +52,7 @@ public class TestJCLO
     @Test
     public void single_booleans()
     {
-        Map<String, Boolean> hm = new HashMap<String, Boolean>();
+        Map<String, Boolean> hm = new HashMap<>();
         hm.put ("", false);
         hm.put ("--debug", true);
         hm.put ("--debug=FALSE", false);
@@ -169,9 +168,16 @@ public class TestJCLO
         TestLevels l = new TestLevels();
         l.level = Levels.SEVERE;
         JCLO jclo = new JCLO(l);
-        jclo.parse(new String[]{"-level", "SEVERE"});
-        System.out.println (l.level);
-        System.out.println (jclo.usage());
+        jclo.parse(new String[]{"--level=ERROR"});
+        Assert.assertEquals(l.level, Levels.ERROR);
+        Assert.assertEquals("--level=[SEVERE, ERROR, WARNING, INFO, DEBUG, TRACE]\n", jclo.usage());
+    }
+
+    @Test(expected = java.lang.IllegalArgumentException.class)
+    public void testjavalangIllegalArgumentException() {
+        TestLevels l = new TestLevels();
+        JCLO jclo = new JCLO(l);
+        jclo.parse(new String[]{"--level=FOO"});
     }
 
     /*

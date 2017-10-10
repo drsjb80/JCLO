@@ -3,10 +3,7 @@ package edu.msudenver.cs.jclo;
 import java.lang.reflect.Field;
 import java.lang.reflect.Array;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 import java.io.FileInputStream;
 
 /**
@@ -189,14 +186,17 @@ public class JCLO {
     }
 
     private String getUsageType(Class type) {
-        // System.out.println(type.getName());
+        String dd = (doubleDashes ? "=" : " ");
+
         if (type.getName().equals("boolean")) {
             return (doubleDashes ? "[=boolean]" : "");
         } else if (type.isArray()) {
-            return ((doubleDashes ? "=" : " ") + getArrayType(type) + "...");
+            return dd + getArrayType(type) + "...";
+        } else if (type.isEnum()) {
+            return dd + Arrays.toString(type.getEnumConstants());
         } else {
-            return ((doubleDashes ? "=" : " ") +
-                    type.getName().replaceFirst("java.lang.", ""));
+            return dd +
+                type.getName().replaceFirst("java.lang.", "");
         }
     }
 
@@ -206,7 +206,7 @@ public class JCLO {
      * @return a String that specifies acceptable options
      */
     public String usage() {
-        List<String> a = new ArrayList<>();
+        List<String> list = new ArrayList<>();
 
         for (Field field : fields) {
             String key = field.getName();
@@ -229,17 +229,15 @@ public class JCLO {
             key = key.replaceAll("__", "-");
             key = key.replaceAll("_\\$", ".");
 
-            a.add((doubleDashes ? "--" : "-") + key +
+            list.add((doubleDashes ? "--" : "-") + key +
                     getUsageType(type) + "\n");
         }
 
+        Collections.sort(list);
+
         String r = "";
-
-        Collections.sort(a);
-
-        for (String anA : a)
-            if (anA != null)
-                r += anA;
+        for (String l : list)
+            r += l;
 
         return (r);
     }
@@ -336,6 +334,8 @@ public class JCLO {
      * @return an Object of the correct type and value
      */
     private Object makeObject(String type, String val) {
+        // System.out.println("type = " + type);
+        // System.out.println("val = " + val);
         if (type.equals("boolean")) {
             return (Boolean.valueOf(val));
         }
@@ -392,15 +392,17 @@ public class JCLO {
             hasEquals = args[i].contains("=");
 
             String key = getKey(args[i]);
+            // System.out.println("key = " + key);
             Field field = getField(key);
+            // System.out.println("field = " + field);
 
             if (field == null) {
-                throw (new IllegalArgumentException
-                        ("No such option: \"" + key + "\""));
+                throw (new IllegalArgumentException ("No such option: \"" + key + "\""));
             }
 
             Class type = field.getType();
             String name = type.getName();
+            // System.out.println ("name = " + name);
 
             if (type.isArray())
                 name = type.getComponentType().getName();
@@ -413,6 +415,15 @@ public class JCLO {
                 value = getEqualsValue(args[i]);
             else
                 value = args[++i];
+
+            if (type.isEnum()) {
+                try {
+                    field.set(object, Enum.valueOf((Class<Enum>) field.getType(), value));
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+                continue;
+            }
 
             Object o = makeObject(name, value);
 
