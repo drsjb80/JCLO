@@ -12,7 +12,7 @@ class JCLOArgs
     int font__size;     // __ -> -
     String font__name;
     String font__style;
-    boolean debug;
+    Boolean debug;
     boolean d;
     boolean _1;         // _ -> 
     boolean help;
@@ -46,14 +46,14 @@ class TestLevels {
 
 public class TestJCLO
 {
-    JCLOArgs jcloargs = new JCLOArgs();
-    JCLO jclo = new JCLO (jcloargs);
+    private final JCLOArgs jcloargs = new JCLOArgs();
+    private final JCLO jclo = new JCLO (jcloargs);
 
     @Test
     public void single_booleans()
     {
-        Map<String, Boolean> hm = new HashMap<>();
-        hm.put ("", false);
+        Map<String, Boolean> hm = new HashMap<String, Boolean>();
+        hm.put ("", null);
         hm.put ("--debug", true);
         hm.put ("--debug=FALSE", false);
 	    hm.put ("--debug=true", true);
@@ -64,14 +64,9 @@ public class TestJCLO
 	    hm.put ("--debug=NO", false);
 	    hm.put ("--1", true);
 
-        for (Object o : hm.entrySet()) {
-            Map.Entry me = (Map.Entry) o;
-            String foo[] = new String[1];
-            foo[0] = (String) me.getKey();
-
-            jclo.parse(foo);
-
-            Assert.assertEquals(jcloargs.debug, me.getValue());
+        for (String s: hm.keySet()) {
+            jclo.parse(new String[]{s});
+            Assert.assertEquals(jcloargs.debug, hm.get(s));
         }
     }
 
@@ -120,7 +115,7 @@ public class TestJCLO
     }
 
     @Rule
-    public ExpectedException exception = ExpectedException.none();
+    public final ExpectedException exception = ExpectedException.none();
 
     @Test
     public void exeception()

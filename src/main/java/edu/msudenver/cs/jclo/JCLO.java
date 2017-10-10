@@ -188,7 +188,7 @@ public class JCLO {
     private String getUsageType(Class type) {
         String dd = (doubleDashes ? "=" : " ");
 
-        if (type.getName().equals("boolean")) {
+        if (type.getName().equals("boolean") || type.getName().equals("java.lang.Boolean")) {
             return (doubleDashes ? "[=boolean]" : "");
         } else if (type.isArray()) {
             return dd + getArrayType(type) + "...";
@@ -336,35 +336,19 @@ public class JCLO {
     private Object makeObject(String type, String val) {
         // System.out.println("type = " + type);
         // System.out.println("val = " + val);
-        if (type.equals("boolean")) {
-            return (Boolean.valueOf(val));
-        }
-        if (type.equals("byte")) {
-            return (Byte.valueOf(val));
-        }
-        if (type.equals("short")) {
-            return (Short.valueOf(val));
-        }
-        if (type.equals("int")) {
-            return (Integer.valueOf(val));
-        }
-        if (type.equals("float")) {
-            return (Float.valueOf(val));
-        }
-        if (type.equals("double")) {
-            return (Double.valueOf(val));
-        }
-        if (type.equals("long")) {
-            return (Long.valueOf(val));
-        }
-        if (type.equals("java.lang.String")) {
-            return (val);
-        }
-        if (type.equals("char")) {
-            return (val.charAt(0));
+        switch (type) {
+            case "boolean": case "java.lang.Boolean": return Boolean.valueOf(val);
+            case "byte": return Byte.valueOf(val);
+            case "short": return Short.valueOf(val);
+            case "int": return Integer.valueOf(val);
+            case "float": return Float.valueOf(val);
+            case "double": return Double.valueOf(val);
+            case "long": return Long.valueOf(val);
+            case "string": return val;
+            case "char": return val.charAt(0);
         }
 
-        return (null);
+        throw new IllegalArgumentException("Unknown type: " + type);
     }
 
     private String getEqualsValue(String arg) {
@@ -401,6 +385,7 @@ public class JCLO {
             }
 
             Class type = field.getType();
+            // System.out.println("type = " + type);
             String name = type.getName();
             // System.out.println ("name = " + name);
 
@@ -409,26 +394,20 @@ public class JCLO {
 
             String value;
 
-            if (name.equals("boolean"))
+            if (name.equals("boolean") || name.equals("java.lang.Boolean"))
                 value = getBooleanValue(args[i]);
             else if (doubleDashes || hasEquals)
                 value = getEqualsValue(args[i]);
             else
                 value = args[++i];
 
-            if (type.isEnum()) {
-                try {
-                    field.set(object, Enum.valueOf((Class<Enum>) field.getType(), value));
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-                continue;
+            // horrible hack as i can't figure out how to call a generic class's toValue,
+            // so we'll pretend the are primitive types and call makeObject.
+            if (! type.isPrimitive()) {
+                name = name.replaceFirst("java.lang.", "").toLowerCase();
             }
 
-            Object o = makeObject(name, value);
-
-            if (o == null)
-                continue;
+            Object o = type.isEnum() ? Enum.valueOf(type, value) : makeObject(name, value);
 
             if (type.isArray())
                 o = addToArray(field, o);
