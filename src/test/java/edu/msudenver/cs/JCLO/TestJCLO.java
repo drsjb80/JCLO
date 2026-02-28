@@ -1,3 +1,5 @@
+package edu.msudenver.cs.JCLO;
+
 import edu.msudenver.cs.jclo.JCLO;
 
 import org.junit.Assert;
