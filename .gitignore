@@ -1,1 +1,31 @@
+# Compiled class files
+*.class
+
+# Generated files
+*.log
+*.ear
+*.jar
+
+# Maven
+/target/
+pom.xml.tag
+pom.xml.versions
+pom.xml.releaseBackup
+pom.xml.next
+release.properties
+
+# Gradle
+.gradle/
+/build/
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# IntelliJ IDEA
 .idea/
+*.iml
+*.ipr
+*.iws
+/out/
