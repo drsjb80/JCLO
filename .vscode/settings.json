@@ -3,5 +3,6 @@
         "/opt/homebrew/Cellar/maven/3.9.12/bin/mvn": true,
         "git add": true,
         "git commit": true
-    }
+    },
+    "java.configuration.updateBuildConfiguration": "interactive"
 }

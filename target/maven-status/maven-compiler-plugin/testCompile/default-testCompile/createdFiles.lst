@@ -1,6 +1,6 @@
-Levels.class
-TestJCLO.class
-JCLOArgs.class
-JCLOnly.class
-TestLevels.class
-Equivalent.class
+edu/msudenver/cs/JCLO/TestLevels.class
+edu/msudenver/cs/JCLO/JCLOArgs.class
+edu/msudenver/cs/JCLO/Levels.class
+edu/msudenver/cs/JCLO/JCLOnly.class
+edu/msudenver/cs/JCLO/TestJCLO.class
+edu/msudenver/cs/JCLO/Equivalent.class
