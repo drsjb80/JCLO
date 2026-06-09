@@ -1,6 +1,10 @@
 # JCLO
 A Java Command Line Option package
 
+[![CI](https://github.com/drsjb80/JCLO/actions/workflows/ci.yml/badge.svg)](https://github.com/drsjb80/JCLO/actions/workflows/ci.yml)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![Java 21](https://img.shields.io/badge/Java-21-orange.svg)](https://www.oracle.com/java/)
+
 This package takes an object, uses reflection to find varibles in that
 object, and creates a command line parser that uses those variable names
 and types to give values to those variables. This dramtically reduces the
