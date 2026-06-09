@@ -25,8 +25,8 @@ jobs:
           cache: maven
 
       - name: Build and run tests
-        run: mvn clean verify
+        run: mvn clean verify -Dgpg.skip=true
 
       - name: Run tests with coverage
-        run: mvn test jacoco:report
+        run: mvn test jacoco:report -Dgpg.skip=true
         continue-on-error: true
