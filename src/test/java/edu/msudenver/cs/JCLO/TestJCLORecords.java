@@ -1,8 +1,8 @@
 package edu.msudenver.cs.JCLO;
 
 import edu.msudenver.cs.jclo.JCLO;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 import java.util.Arrays;
 
 /**
@@ -89,20 +89,24 @@ public class TestJCLORecords {
         assertEquals(3000, args.port());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void recordValidationRejectsInvalidPort() {
         ValidatedArgsMutable temp = new ValidatedArgsMutable();
         JCLO jclo = new JCLO(temp);
         jclo.parse(new String[]{"--port=99999"});
 
-        ValidatedArgs.fromMutable(temp); // Should throw
+        assertThrows(IllegalArgumentException.class, () -> {
+            ValidatedArgs.fromMutable(temp); // Should throw
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void recordValidationRejectsBlankHost() {
         ValidatedArgsMutable temp = new ValidatedArgsMutable();
         temp.host = "";
-        ValidatedArgs.fromMutable(temp); // Should throw
+        assertThrows(IllegalArgumentException.class, () -> {
+            ValidatedArgs.fromMutable(temp); // Should throw
+        });
     }
 
     // ===== Pattern 3: Record with Collections =====

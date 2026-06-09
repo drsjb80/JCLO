@@ -2,10 +2,8 @@ package edu.msudenver.cs.JCLO;
 
 import edu.msudenver.cs.jclo.JCLO;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.Rule;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,7 +66,7 @@ public class TestJCLO
 
         for (String s: hm.keySet()) {
             jclo.parse(new String[]{s});
-            Assert.assertEquals(jcloargs.debug, hm.get(s));
+            assertEquals(jcloargs.debug, hm.get(s));
         }
     }
 
@@ -77,25 +75,25 @@ public class TestJCLO
     {
 	    jclo.parse (new String[]{"--font-size=10", "--font-style=BOLD",
             "--font-name=foo", "--debug"});
-        Assert.assertEquals (jcloargs.font__size, 10);
-        Assert.assertEquals (jcloargs.font__style, "BOLD");
-        Assert.assertEquals (jcloargs.font__name, "foo");
-        Assert.assertTrue (jcloargs.debug);
+        assertEquals (jcloargs.font__size, 10);
+        assertEquals (jcloargs.font__style, "BOLD");
+        assertEquals (jcloargs.font__name, "foo");
+        assertTrue (jcloargs.debug);
     }
 
     @Test
     public void test_additionals()
     {
 	    jclo.parse (new String[]{"--debug", "one", "two", "three"});
-        Assert.assertTrue (jcloargs.debug);
-        Assert.assertTrue (jcloargs.additional[0].equals("one"));
-        Assert.assertTrue (jcloargs.additional[1].equals("two"));
-        Assert.assertTrue (jcloargs.additional[2].equals("three"));
+        assertTrue (jcloargs.debug);
+        assertTrue (jcloargs.additional[0].equals("one"));
+        assertTrue (jcloargs.additional[1].equals("two"));
+        assertTrue (jcloargs.additional[2].equals("three"));
 
 	    jclo.parse (new String[]{"zero", "one", "two"});
-        Assert.assertTrue (jcloargs.additional[0].equals("zero"));
-        Assert.assertTrue (jcloargs.additional[1].equals("one"));
-        Assert.assertTrue (jcloargs.additional[2].equals("two"));
+        assertTrue (jcloargs.additional[0].equals("zero"));
+        assertTrue (jcloargs.additional[1].equals("one"));
+        assertTrue (jcloargs.additional[2].equals("two"));
     }
 
     @Test
@@ -103,7 +101,7 @@ public class TestJCLO
     {
 	    jclo.parse (new String[]
             {"-Djava.util.logging.config.file=MethodFilter.props"});
-        Assert.assertEquals(jcloargs.Djava_$util_$logging_$config_$file,
+        assertEquals(jcloargs.Djava_$util_$logging_$config_$file,
             "MethodFilter.props");
     }
 
@@ -111,19 +109,17 @@ public class TestJCLO
     public void multiple_args()
     {
 	    jclo.parse (new String[]{"-debug", "true"});
-        Assert.assertTrue(jcloargs.debug);
+        assertTrue(jcloargs.debug);
 	    jclo.parse (new String[]{"-font-size", "10"});
-        Assert.assertEquals (jcloargs.font__size, 10);
+        assertEquals (jcloargs.font__size, 10);
     }
-
-    @Rule
-    public final ExpectedException exception = ExpectedException.none();
 
     @Test
     public void exeception()
     {
-        exception.expect(IllegalArgumentException.class);
-	    jclo.parse (new String[]{"--none=none"});
+        assertThrows(IllegalArgumentException.class, () -> {
+            jclo.parse (new String[]{"--none=none"});
+        });
     }
 
     @Test
@@ -133,22 +129,22 @@ public class TestJCLO
         JCLO jclo = new JCLO ("JCLO", jclonly);
 
 	    jclo.parse (new String[]{"-debug", "true"});
-        Assert.assertTrue(jclonly.JCLOdebug);
+        assertTrue(jclonly.JCLOdebug);
 
 	    jclo.parse (new String[]{"zero", "one", "two"});
         String additionals[] = jclonly.JCLOadditional;
-        Assert.assertTrue(additionals[0].equals("zero"));
-        Assert.assertTrue(additionals[1].equals("one"));
-        Assert.assertTrue(additionals[2].equals("two"));
+        assertTrue(additionals[0].equals("zero"));
+        assertTrue(additionals[1].equals("one"));
+        assertTrue(additionals[2].equals("two"));
 
 	    jclo.parse (new String[]{"-1"});
-        Assert.assertTrue(jclonly.JCLO_1);
+        assertTrue(jclonly.JCLO_1);
     }
 
     @Test
     public void test_help()
     {
-        Assert.assertEquals (jclo.usage(), 
+        assertEquals (jclo.usage(), 
             "-1\n" +
             "-Djava.util.logging.config.file String\n"+
             "-d\n"+
@@ -166,15 +162,17 @@ public class TestJCLO
         l.level = Levels.SEVERE;
         JCLO jclo = new JCLO(l);
         jclo.parse(new String[]{"--level=ERROR"});
-        Assert.assertEquals(l.level, Levels.ERROR);
-        Assert.assertEquals("--level=[SEVERE, ERROR, WARNING, INFO, DEBUG, TRACE]\n", jclo.usage());
+        assertEquals(l.level, Levels.ERROR);
+        assertEquals("--level=[SEVERE, ERROR, WARNING, INFO, DEBUG, TRACE]\n", jclo.usage());
     }
 
-    @Test(expected = java.lang.IllegalArgumentException.class)
+    @Test
     public void testjavalangIllegalArgumentException() {
         TestLevels l = new TestLevels();
         JCLO jclo = new JCLO(l);
-        jclo.parse(new String[]{"--level=FOO"});
+        assertThrows(IllegalArgumentException.class, () -> {
+            jclo.parse(new String[]{"--level=FOO"});
+        });
     }
 
     /*
@@ -185,7 +183,7 @@ public class TestJCLO
         JCLO jclo = new JCLO (equiv);
 
 	    jclo.parse (new String[]{"-o", "10"});
-        Assert.assertEquals(equiv.one, 10);
+        assertEquals(equiv.one, 10);
     }
     */
 }
