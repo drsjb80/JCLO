@@ -19,6 +19,27 @@ import java.io.FileInputStream;
  * include a String array named "additional", all non-dashed arguments will
  * be placed in it.
  *
+ * JAVA RECORDS SUPPORT:
+ * =====================
+ * JCLO now supports Java records (immutable data classes) via a two-phase approach:
+ *
+ * 1. Create a mutable class with the same fields as your record
+ * 2. Parse into the mutable class using JCLO: new JCLO(mutableInstance).parse(args)
+ * 3. Convert the mutable instance to your immutable record
+ *
+ * Example:
+ *   class AppArgsMutable { String name; int count; }  // Mutable for JCLO
+ *   record AppArgs(String name, int count) {}          // Immutable record
+ *
+ *   AppArgsMutable temp = new AppArgsMutable();
+ *   new JCLO(temp).parse(args);
+ *   AppArgs args = new AppArgs(temp.name, temp.count);
+ *
+ * Or use a factory method for cleaner conversion:
+ *   static AppArgs fromMutable(AppArgsMutable m) {
+ *       return new AppArgs(m.name, m.count);
+ *   }
+ *
  * @author Steve Beaty (beatys@mscd.edu) @version    $Id:
  *         JCLO.java,v 1.5 2007/11/01 16:43:12 beaty Exp beaty $
  */
