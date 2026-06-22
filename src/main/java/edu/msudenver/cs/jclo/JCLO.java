@@ -19,12 +19,40 @@ import java.io.FileInputStream;
  * include a String array named "additional", all non-dashed arguments will
  * be placed in it.
  *
+ * CONSTRUCTORS:
+ * =============
+ * Two constructors are available:
+ *
+ * JCLO(Object object):
+ *   Binds to the object without parsing. Call parse(String[]) explicitly.
+ *
+ * JCLO(Object object, String[] args):
+ *   Binds to the object AND immediately parses the arguments in one step.
+ *
+ * CONFIGURATION:
+ * ==============
+ * Before calling parse(), optionally configure prefix and aliases:
+ *   jclo.setPrefix("PREFIX");      // Prepend prefix to all field names
+ *   jclo.setAliases(aliases);      // Set command-line aliases
+ *
+ * USAGE EXAMPLES:
+ * ===============
+ * One-shot parsing:
+ *   MyArgs obj = new MyArgs();
+ *   new JCLO(obj, args);
+ *
+ * With prefix:
+ *   MyArgs obj = new MyArgs();
+ *   JCLO jclo = new JCLO(obj);
+ *   jclo.setPrefix("PREFIX");
+ *   jclo.parse(args);
+ *
  * JAVA RECORDS SUPPORT:
  * =====================
- * JCLO now supports Java records (immutable data classes) via a two-phase approach:
+ * JCLO supports Java records (immutable data classes) via a two-phase approach:
  *
  * 1. Create a mutable class with the same fields as your record
- * 2. Parse into the mutable class using JCLO: new JCLO(mutableInstance).parse(args)
+ * 2. Parse into the mutable class using JCLO
  * 3. Convert the mutable instance to your immutable record
  *
  * Example:
@@ -32,8 +60,8 @@ import java.io.FileInputStream;
  *   record AppArgs(String name, int count) {}          // Immutable record
  *
  *   AppArgsMutable temp = new AppArgsMutable();
- *   new JCLO(temp).parse(args);
- *   AppArgs args = new AppArgs(temp.name, temp.count);
+ *   new JCLO(temp, args);
+ *   AppArgs result = new AppArgs(temp.name, temp.count);
  *
  * Or use a factory method for cleaner conversion:
  *   static AppArgs fromMutable(AppArgsMutable m) {
