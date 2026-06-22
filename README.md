@@ -34,8 +34,7 @@ Here is a simple example using a class devoted to command line options.
         public static void main (String args[])
         {
             ExampleArgs ea = new ExampleArgs();
-            JCLO jclo = new JCLO (ea);
-            jclo.parse (args);
+            new JCLO(ea, args);
 
             System.out.println ("a = " + ea.a);
             System.out.println ("b = " + ea.b);
@@ -86,7 +85,8 @@ single dash options.
         {
             Main main = new Main();
             System.out.println ("before: " + main);
-            JCLO jclo = new JCLO (main, "JCLO");
+            JCLO jclo = new JCLO (main);
+            jclo.setPrefix("JCLO");
             jclo.parse (args);
             System.out.println (jclo.usage());
             System.out.println ("after: " + main);
@@ -102,10 +102,13 @@ An example run.
         -a int
     after: JCLOa = 5 JCLOb = true c = 0 d = false
 
-One can also create aliased arguments via the constructor. It can take an
+One can also create aliased arguments via the setAliases method. It takes an
 array of arrays, where each subarray is alias, arg.  For example:
 
+    JCLO jclo = new JCLO(object);
     String aliases[][] = {{"alias", "a"}};
+    jclo.setAliases(aliases);
+    jclo.parse(args);
 
 states that one can use --alias for --a.
 
