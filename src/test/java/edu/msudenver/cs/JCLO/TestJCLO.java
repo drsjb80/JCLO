@@ -126,7 +126,8 @@ public class TestJCLO
     public void test_prefix()
     {
         JCLOnly jclonly = new JCLOnly();
-        JCLO jclo = new JCLO ("JCLO", jclonly);
+        JCLO jclo = new JCLO(jclonly);
+        jclo.setPrefix("JCLO");
 
 	    jclo.parse (new String[]{"-debug", "true"});
         assertTrue(jclonly.JCLOdebug);

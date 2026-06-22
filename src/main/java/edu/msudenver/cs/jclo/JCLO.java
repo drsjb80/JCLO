@@ -45,67 +45,60 @@ import java.io.FileInputStream;
  */
 
 public class JCLO {
-    private final Field[] fields;
-    private final Object object;
+    private Field[] fields;
+    private Object object;
     private boolean doubleDashes;
     private boolean hasEquals;
     private String prefix = "";
-    private final String[][] aliases;
+    private String[][] aliases;
 
-    /**
-     * A constructor that takes the Object that contains the variables
-     * acceptable on a command line.  Call parse (String) to do the actual
-     * parsing.
-     *
-     * @param object where the variables/arguments are
-     */
-    public JCLO(Object object) {
-        this(null, object, null);
-    }
-
-    /**
-     * A constructor that takes the Object that contains the variables
-     * acceptable on a command line.  Call parse (String) to do the actual
-     * parsing.
-     *
-     * @param object  where the variables/arguments are
-     * @param aliases if there are CLO aliases
-     */
-    public JCLO(Object object, String[][] aliases) {
-        this(null, object, aliases);
-    }
-
-    /**
-     * A constructor that takes the Object that contains the variables
-     * acceptable on a command line.  Call parse (String) to do the actual
-     * parsing.
-     *
-     * @param object where the variables/arguments are
-     * @param prefix if all CLO variables start with a prefix
-     */
-    public JCLO(String prefix, Object object) {
-        this(prefix, object, null);
-    }
-
-    /**
-     * A constructor that takes an Object, a prefix, and a boolean that
-     * specifies whether to accept single or double dashes; call parse
-     * (String) to do the actual parsing.
-     *
-     * @param object  where the variables/arguments are
-     * @param prefix  the String CLO's start with, if any
-     * @param aliases if there are CLO aliases
-     */
-    public JCLO(String prefix, Object object, String[][] aliases) {
+    private void init(final Object object) {
         this.object = object;
-        this.prefix = prefix;
-        this.aliases = aliases;
-
-        fields = object.getClass().getDeclaredFields();
-
-        for (Field field : fields) {
+        this.fields = object.getClass().getDeclaredFields();
+        for (Field field : this.fields) {
             field.setAccessible(true);
         }
+    }
+
+    /**
+     * A constructor that takes the Object that contains the variables
+     * acceptable on a command line.  Call parse (String) to do the actual
+     * parsing.
+     *
+     * @param object where the variables/arguments are
+     */
+    public JCLO(final Object object) {
+        init(object);
+    }
+
+    /**
+     * A constructor that takes the Object and immediately parses the
+     * command-line arguments.
+     *
+     * @param object where the variables/arguments are
+     * @param args the command-line arguments to parse
+     */
+    public JCLO(final Object object, final String[] args) {
+        init(object);
+        parse(args);
+    }
+
+    /**
+     * Set a prefix for all command-line variables. Call before parse().
+     *
+     * @param prefix the String CLO's start with, if any
+     */
+    public void setPrefix(final String prefix) {
+        this.prefix = prefix;
+    }
+
+    /**
+     * Set aliases for command-line variables. Call before parse().
+     *
+     * @param aliases if there are CLO aliases
+     */
+    public void setAliases(final String[][] aliases) {
+        this.aliases = aliases;
     }
 
     /**
@@ -355,8 +348,6 @@ public class JCLO {
      * @return an Object of the correct type and value
      */
     private Object makeObject(String type, String val) {
-        // System.out.println("type = " + type);
-        // System.out.println("val = " + val);
         switch (type) {
             case "boolean": case "java.lang.Boolean": return Boolean.valueOf(val);
             case "byte": return Byte.valueOf(val);
@@ -397,18 +388,14 @@ public class JCLO {
             hasEquals = args[i].contains("=");
 
             String key = getKey(args[i]);
-            // System.out.println("key = " + key);
             Field field = getField(key);
-            // System.out.println("field = " + field);
 
             if (field == null) {
                 throw (new IllegalArgumentException ("No such option: \"" + key + "\""));
             }
 
             Class type = field.getType();
-            // System.out.println("type = " + type);
             String name = type.getName();
-            // System.out.println ("name = " + name);
 
             if (type.isArray())
                 name = type.getComponentType().getName();
@@ -435,15 +422,5 @@ public class JCLO {
 
             setObject(field, o);
         }
-    }
-
-    public static void main(String args[]) throws java.io.IOException {
-        Properties properties = new Properties();
-        FileInputStream in = new FileInputStream("version.properties");
-        properties.load(in);
-        in.close();
-        String version = properties.getProperty("version");
-
-        System.out.println("Version: " + version);
     }
 }
