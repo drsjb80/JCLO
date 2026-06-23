@@ -93,6 +93,36 @@ single dash options.
         }
     }
 
+## Simplified Parsing with Static Method
+
+For the simplest use case, use the static `parse()` method to create and populate an object in one call:
+
+    import edu.msudenver.cs.jclo.JCLO;
+
+    class AppArgs {
+        String host = "localhost";
+        int port = 8080;
+        boolean verbose;
+    }
+
+    public class App {
+        public static void main(String[] args) {
+            AppArgs config = JCLO.parse(AppArgs.class, args);
+            System.out.println("Host: " + config.host);
+            System.out.println("Port: " + config.port);
+            System.out.println("Verbose: " + config.verbose);
+        }
+    }
+
+Usage:
+
+    $ java App --host=example.com --port=9000 --verbose
+    Host: example.com
+    Port: 9000
+    Verbose: true
+
+The static `parse()` method instantiates the class and populates its fields in a single step, ideal for straightforward command-line parsing.
+
 An example run.
 
     $ java Main -a 5 -b
