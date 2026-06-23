@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="edu.msudenver.cs.JCLO.TestJCLO" time="0.038" tests="10" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="edu.msudenver.cs.JCLO.TestJCLO" time="0.037" tests="11" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="26"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
-    <property name="java.class.path" value="/private/tmp/JCLO/target/test-classes:/private/tmp/JCLO/target/classes:/Users/beatys/.m2/repository/org/junit/jupiter/junit-jupiter/5.9.3/junit-jupiter-5.9.3.jar:/Users/beatys/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.9.3/junit-jupiter-api-5.9.3.jar:/Users/beatys/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/Users/beatys/.m2/repository/org/junit/platform/junit-platform-commons/1.9.3/junit-platform-commons-1.9.3.jar:/Users/beatys/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/beatys/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.9.3/junit-jupiter-params-5.9.3.jar:/Users/beatys/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.9.3/junit-jupiter-engine-5.9.3.jar:/Users/beatys/.m2/repository/org/junit/platform/junit-platform-engine/1.9.3/junit-platform-engine-1.9.3.jar:"/>
+    <property name="java.class.path" value="/Users/beatys/src/JCLO/target/test-classes:/Users/beatys/src/JCLO/target/classes:/Users/beatys/.m2/repository/org/junit/jupiter/junit-jupiter/5.9.3/junit-jupiter-5.9.3.jar:/Users/beatys/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.9.3/junit-jupiter-api-5.9.3.jar:/Users/beatys/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/Users/beatys/.m2/repository/org/junit/platform/junit-platform-commons/1.9.3/junit-platform-commons-1.9.3.jar:/Users/beatys/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/beatys/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.9.3/junit-jupiter-params-5.9.3.jar:/Users/beatys/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.9.3/junit-jupiter-engine-5.9.3.jar:/Users/beatys/.m2/repository/org/junit/platform/junit-platform-engine/1.9.3/junit-platform-engine-1.9.3.jar:"/>
     <property name="java.vm.vendor" value="Homebrew"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.vendor.url" value="https://github.com/Homebrew/homebrew-core/issues"/>
@@ -12,10 +12,9 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="/opt/homebrew/Cellar/openjdk/26.0.1/libexec/openjdk.jdk/Contents/Home/lib"/>
-    <property name="sun.java.command" value="/private/tmp/JCLO/target/surefire/surefirebooter-20260609102309011_3.jar /private/tmp/JCLO/target/surefire 2026-06-09T10-23-08_269-jvmRun1 surefire-20260609102309011_1tmp surefire_0-20260609102309011_2tmp"/>
-    <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="sun.java.command" value="/Users/beatys/src/JCLO/target/surefire/surefirebooter-20260623165632007_3.jar /Users/beatys/src/JCLO/target/surefire 2026-06-23T16-56-31_961-jvmRun1 surefire-20260623165632007_1tmp surefire_0-20260623165632007_2tmp"/>
     <property name="jdk.debug" value="release"/>
-    <property name="surefire.test.class.path" value="/private/tmp/JCLO/target/test-classes:/private/tmp/JCLO/target/classes:/Users/beatys/.m2/repository/org/junit/jupiter/junit-jupiter/5.9.3/junit-jupiter-5.9.3.jar:/Users/beatys/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.9.3/junit-jupiter-api-5.9.3.jar:/Users/beatys/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/Users/beatys/.m2/repository/org/junit/platform/junit-platform-commons/1.9.3/junit-platform-commons-1.9.3.jar:/Users/beatys/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/beatys/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.9.3/junit-jupiter-params-5.9.3.jar:/Users/beatys/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.9.3/junit-jupiter-engine-5.9.3.jar:/Users/beatys/.m2/repository/org/junit/platform/junit-platform-engine/1.9.3/junit-platform-engine-1.9.3.jar:"/>
+    <property name="surefire.test.class.path" value="/Users/beatys/src/JCLO/target/test-classes:/Users/beatys/src/JCLO/target/classes:/Users/beatys/.m2/repository/org/junit/jupiter/junit-jupiter/5.9.3/junit-jupiter-5.9.3.jar:/Users/beatys/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.9.3/junit-jupiter-api-5.9.3.jar:/Users/beatys/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/Users/beatys/.m2/repository/org/junit/platform/junit-platform-commons/1.9.3/junit-platform-commons-1.9.3.jar:/Users/beatys/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/beatys/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.9.3/junit-jupiter-params-5.9.3.jar:/Users/beatys/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.9.3/junit-jupiter-engine-5.9.3.jar:/Users/beatys/.m2/repository/org/junit/platform/junit-platform-engine/1.9.3/junit-platform-engine-1.9.3.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="/Users/beatys"/>
     <property name="user.language" value="en"/>
@@ -23,15 +22,14 @@
     <property name="java.version.date" value="2026-04-21"/>
     <property name="java.home" value="/opt/homebrew/Cellar/openjdk/26.0.1/libexec/openjdk.jdk/Contents/Home"/>
     <property name="file.separator" value="/"/>
-    <property name="basedir" value="/private/tmp/JCLO"/>
-    <property name="java.vm.compressedOopsMode" value="Non-zero based"/>
+    <property name="basedir" value="/Users/beatys/src/JCLO"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
     <property name="line.separator" value="&#10;"/>
-    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="apple.awt.application.name" value="ForkedBooter"/>
-    <property name="surefire.real.class.path" value="/private/tmp/JCLO/target/surefire/surefirebooter-20260609102309011_3.jar"/>
+    <property name="surefire.real.class.path" value="/Users/beatys/src/JCLO/target/surefire/surefirebooter-20260623165632007_3.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
-    <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.runtime.version" value="26.0.1"/>
     <property name="user.name" value="beatys"/>
     <property name="stdout.encoding" value="UTF-8"/>
@@ -45,7 +43,7 @@
     <property name="java.vendor.url.bug" value="https://github.com/Homebrew/homebrew-core/issues"/>
     <property name="java.io.tmpdir" value="/var/folders/dq/6_8vrgdj6p92tjhlpvgcp6wspws93g/T/"/>
     <property name="java.version" value="26.0.1"/>
-    <property name="user.dir" value="/private/tmp/JCLO"/>
+    <property name="user.dir" value="/Users/beatys/src/JCLO"/>
     <property name="os.arch" value="aarch64"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
     <property name="native.encoding" value="UTF-8"/>
@@ -56,17 +54,17 @@
     <property name="java.vm.version" value="26.0.1"/>
     <property name="stdin.encoding" value="UTF-8"/>
     <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
-    <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.class.version" value="70.0"/>
   </properties>
-  <testcase name="testjavalangIllegalArgumentException" classname="edu.msudenver.cs.JCLO.TestJCLO" time="0.013"/>
+  <testcase name="testjavalangIllegalArgumentException" classname="edu.msudenver.cs.JCLO.TestJCLO" time="0.012"/>
   <testcase name="test_enum" classname="edu.msudenver.cs.JCLO.TestJCLO" time="0.002"/>
   <testcase name="test_help" classname="edu.msudenver.cs.JCLO.TestJCLO" time="0.001"/>
   <testcase name="test_dotted" classname="edu.msudenver.cs.JCLO.TestJCLO" time="0.001"/>
   <testcase name="multiple_args" classname="edu.msudenver.cs.JCLO.TestJCLO" time="0.002"/>
-  <testcase name="test_prefix" classname="edu.msudenver.cs.JCLO.TestJCLO" time="0.001"/>
+  <testcase name="test_prefix" classname="edu.msudenver.cs.JCLO.TestJCLO" time="0.003"/>
   <testcase name="exeception" classname="edu.msudenver.cs.JCLO.TestJCLO" time="0.001"/>
-  <testcase name="test_additionals" classname="edu.msudenver.cs.JCLO.TestJCLO" time="0.001"/>
-  <testcase name="test_strings" classname="edu.msudenver.cs.JCLO.TestJCLO" time="0.001"/>
+  <testcase name="test_additionals" classname="edu.msudenver.cs.JCLO.TestJCLO" time="0.0"/>
+  <testcase name="test_static_parse" classname="edu.msudenver.cs.JCLO.TestJCLO" time="0.0"/>
+  <testcase name="test_strings" classname="edu.msudenver.cs.JCLO.TestJCLO" time="0.0"/>
   <testcase name="single_booleans" classname="edu.msudenver.cs.JCLO.TestJCLO" time="0.001"/>
 </testsuite>

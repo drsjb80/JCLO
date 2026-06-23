@@ -176,6 +176,15 @@ public class TestJCLO
         });
     }
 
+    @Test
+    public void test_static_parse() {
+        JCLOArgs args = JCLO.parse(JCLOArgs.class,
+            new String[]{"--font-size=10", "--font-name=foo", "--debug"});
+        assertEquals(args.font__size, 10);
+        assertEquals(args.font__name, "foo");
+        assertTrue(args.debug);
+    }
+
     /*
     @Test
     public void test_equivalent()

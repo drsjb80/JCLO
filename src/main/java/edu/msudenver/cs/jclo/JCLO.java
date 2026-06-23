@@ -112,6 +112,27 @@ public class JCLO {
     }
 
     /**
+     * Static method to parse command-line arguments into a new instance of the given class.
+     * The class must have a no-argument constructor.
+     *
+     * @param <T> the type to parse into
+     * @param cls the class to instantiate and populate
+     * @param args the command-line arguments to parse
+     * @return a new instance of cls with parsed values
+     */
+    public static <T> T parse(final Class<T> cls, final String[] args) {
+        try {
+            var constructor = cls.getDeclaredConstructor();
+            constructor.setAccessible(true);
+            T instance = constructor.newInstance();
+            new JCLO(instance, args);
+            return instance;
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to parse arguments into " + cls.getName(), e);
+        }
+    }
+
+    /**
      * Set a prefix for all command-line variables. Call before parse().
      *
      * @param prefix the String CLO's start with, if any
